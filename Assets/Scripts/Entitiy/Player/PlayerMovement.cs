@@ -1,23 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 namespace Assets.Scripts
 {
 	public class PlayerMovement : EntityMovement
 	{
-		[Inject] private PlayerInput playerInput;
 		[Inject] private PlayerCamera playerCamera;
+		[Inject] private PlayerInputHandler inputHandler;
+
+		//Getting called from Unity their PlayerInput
 
 		private void OnEnable()
 		{
-			playerInput.Mouse1Down += OnMouse1Down;
+			inputHandler.MouseButton1 += OnMouseButton1;
 		}
 
-		private void OnMouse1Down(Vector3 mousePosition)
+		private void OnMouseButton1()
 		{
-			Vector3? objPoint = playerCamera.MousePositionToObjPoint(mousePosition);
+			Vector3? objPoint = playerCamera.MousePositionToObjPoint(Mouse.current.position.ReadValue());
 
 			if (objPoint == null) return;
 
@@ -26,8 +29,7 @@ namespace Assets.Scripts
 
 		private void OnDisable()
 		{
-			playerInput.Mouse1Down -= OnMouse1Down;
-
+			inputHandler.MouseButton1 -= OnMouseButton1;
 		}
 	}
 }

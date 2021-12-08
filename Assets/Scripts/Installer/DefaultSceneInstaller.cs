@@ -9,17 +9,16 @@ namespace Assets.Scripts
 	{
 		[SerializeField] private GameObject mainCamera;
 		[SerializeField] private GameObject player;
-		[SerializeField] private GameObject playerInput;
+		[SerializeField] private GameObject playerInputHandler;
+
 
 		public override void InstallBindings()
 		{
 			Container.Bind<PlayerCamera>().FromComponentInNewPrefab(mainCamera).AsSingle().NonLazy();
 			Container.Bind<Player>().FromComponentInNewPrefab(player).AsSingle().NonLazy();
-			Container.Bind<PlayerInput>().FromComponentInNewPrefab(playerInput).AsSingle().NonLazy();
+			Container.Bind<PlayerInputHandler>().FromComponentInNewPrefab(playerInputHandler).AsSingle().NonLazy();
 
-
-
-
+			
 			Container.BindFactory<GameObject, Transform, PrefabFactory>().FromFactory<CustomPrefabFactory>();
 		}
 	}

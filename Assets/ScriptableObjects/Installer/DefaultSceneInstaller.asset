@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 6130648598118089487, guid: 4fa2ba90211d934478eafada58e81b0c, type: 3}
   player: {fileID: 8402138125726033021, guid: 17c1ea6fd71c8234e97e3592539f1a08, type: 3}
-  playerInput: {fileID: 6106245284985868985, guid: 9d6b63efc0cb80649893e66c858d8e87, type: 3}
+  playerInputHandler: {fileID: 6106245284985868985, guid: 9d6b63efc0cb80649893e66c858d8e87, type: 3}

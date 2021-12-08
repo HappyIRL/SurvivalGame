@@ -9,16 +9,12 @@ namespace Assets.Scripts
 	{
 		private Camera camera;
 
-		private void Start()
+		private void Awake()
 		{
-			if (!TryGetComponent(out camera))
-			{
-				Debug.LogError("Camera wasn't found on " + this);
-				return;
-			}
+			camera = GetComponent<Camera>();
 		}
 
-		public Vector3? MousePositionToObjPoint(Vector3 mousePosition)
+		public Vector3? MousePositionToObjPoint(Vector2 mousePosition)
 		{
 			Ray ray = camera.ScreenPointToRay(mousePosition);
 
