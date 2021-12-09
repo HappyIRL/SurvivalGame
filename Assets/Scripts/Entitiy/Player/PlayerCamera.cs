@@ -14,13 +14,13 @@ namespace Assets.Scripts
 			camera = GetComponent<Camera>();
 		}
 
-		public Vector3? MousePositionToObjPoint(Vector2 mousePosition)
+		public RaycastHit? MouseToWorldRay(Vector2 mousePos)
 		{
-			Ray ray = camera.ScreenPointToRay(mousePosition);
+			Ray ray = camera.ScreenPointToRay(mousePos);
 
 			if (Physics.Raycast(ray, out RaycastHit hit))
 			{
-				return hit.point;
+				return hit;
 			}
 
 			return null;

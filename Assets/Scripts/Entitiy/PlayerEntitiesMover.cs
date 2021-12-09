@@ -1,35 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
 
 namespace Assets.Scripts
 {
-	public class PlayerMovement : EntityMovement
+	public class PlayerEntitiesMover : MonoBehaviour
 	{
 		[Inject] private PlayerCamera playerCamera;
 		[Inject] private PlayerInputHandler inputHandler;
-
-		//Getting called from Unity their PlayerInput
+		[Inject] private Selector selector;
 
 		private void OnEnable()
 		{
 			inputHandler.MouseButton1 += OnMouseButton1;
 		}
 
-		private void OnMouseButton1()
+		private void OnMouseButton1(Vector2 mousePos)
 		{
-			Vector3? objPoint = playerCamera.MousePositionToObjPoint(Mouse.current.position.ReadValue());
+			RaycastHit? hit = playerCamera.MouseToWorldRay(mousePos);
+			if (hit == null) return;
 
-			if (objPoint == null) return;
-
-			MoveToVector(objPoint.Value);
+			foreach (Collider selection in selector.Selected)
+			{
+				selection.TryGetComponent(out IMoveable moveable);
+				moveable.Move(hit.Value.point);
+			}
 		}
 
 		private void OnDisable()
 		{
 			inputHandler.MouseButton1 -= OnMouseButton1;
 		}
+
+
 	}
 }

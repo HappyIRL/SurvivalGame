@@ -44,6 +44,24 @@ public partial class @SurvivalInputActions : IInputActionCollection2, IDisposabl
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MousePositionChange"",
+                    ""type"": ""Value"",
+                    ""id"": ""ac232739-6d6b-4868-8254-c79eb1b4f04d"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MouseButton0"",
+                    ""type"": ""Button"",
+                    ""id"": ""589ccee4-1854-4a47-9b4f-8bb06591a14c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -66,6 +84,28 @@ public partial class @SurvivalInputActions : IInputActionCollection2, IDisposabl
                     ""processors"": ""NormalizeVector2"",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8c53cfab-200d-4a38-869a-9fc38bcdeac5"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MousePositionChange"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""79534e68-5496-4595-941d-8c143603f9af"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Hold(duration=0.01)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MouseButton0"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -139,6 +179,8 @@ public partial class @SurvivalInputActions : IInputActionCollection2, IDisposabl
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_MouseButton1 = m_Player.FindAction("MouseButton1", throwIfNotFound: true);
         m_Player_Scroll = m_Player.FindAction("Scroll", throwIfNotFound: true);
+        m_Player_MousePositionChange = m_Player.FindAction("MousePositionChange", throwIfNotFound: true);
+        m_Player_MouseButton0 = m_Player.FindAction("MouseButton0", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -200,12 +242,16 @@ public partial class @SurvivalInputActions : IInputActionCollection2, IDisposabl
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_MouseButton1;
     private readonly InputAction m_Player_Scroll;
+    private readonly InputAction m_Player_MousePositionChange;
+    private readonly InputAction m_Player_MouseButton0;
     public struct PlayerActions
     {
         private @SurvivalInputActions m_Wrapper;
         public PlayerActions(@SurvivalInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @MouseButton1 => m_Wrapper.m_Player_MouseButton1;
         public InputAction @Scroll => m_Wrapper.m_Player_Scroll;
+        public InputAction @MousePositionChange => m_Wrapper.m_Player_MousePositionChange;
+        public InputAction @MouseButton0 => m_Wrapper.m_Player_MouseButton0;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -221,6 +267,12 @@ public partial class @SurvivalInputActions : IInputActionCollection2, IDisposabl
                 @Scroll.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScroll;
                 @Scroll.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScroll;
                 @Scroll.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScroll;
+                @MousePositionChange.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePositionChange;
+                @MousePositionChange.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePositionChange;
+                @MousePositionChange.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePositionChange;
+                @MouseButton0.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseButton0;
+                @MouseButton0.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseButton0;
+                @MouseButton0.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseButton0;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -231,6 +283,12 @@ public partial class @SurvivalInputActions : IInputActionCollection2, IDisposabl
                 @Scroll.started += instance.OnScroll;
                 @Scroll.performed += instance.OnScroll;
                 @Scroll.canceled += instance.OnScroll;
+                @MousePositionChange.started += instance.OnMousePositionChange;
+                @MousePositionChange.performed += instance.OnMousePositionChange;
+                @MousePositionChange.canceled += instance.OnMousePositionChange;
+                @MouseButton0.started += instance.OnMouseButton0;
+                @MouseButton0.performed += instance.OnMouseButton0;
+                @MouseButton0.canceled += instance.OnMouseButton0;
             }
         }
     }
@@ -284,5 +342,7 @@ public partial class @SurvivalInputActions : IInputActionCollection2, IDisposabl
     {
         void OnMouseButton1(InputAction.CallbackContext context);
         void OnScroll(InputAction.CallbackContext context);
+        void OnMousePositionChange(InputAction.CallbackContext context);
+        void OnMouseButton0(InputAction.CallbackContext context);
     }
 }

@@ -1,10 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
-using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.AI;
-using Vector3 = UnityEngine.Vector3;
 
 namespace Assets.Scripts
 {
@@ -13,7 +10,9 @@ namespace Assets.Scripts
 		private NavMeshAgent agent;
 
 		private float speed = 10f;
-		private float stoppingDistance = 1f;
+		private float stoppingDistance = 0.1f;
+
+		private Vector3 destination;
 
 		private void Awake()
 		{
@@ -34,9 +33,16 @@ namespace Assets.Scripts
 
 		protected void MoveToVector(Vector3 vector)
 		{
+			destination = vector;
 			agent.transform.forward = vector - agent.transform.position;
 			agent.velocity = agent.transform.forward * speed;
 			agent.SetDestination(vector);
+		}
+
+		private void OnDrawGizmos()
+		{
+			Gizmos.color = Color.green;
+			Gizmos.DrawCube(destination, new Vector3(0.1f, 0.1f, 0.1f));
 		}
 	}
 }

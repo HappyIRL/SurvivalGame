@@ -22,6 +22,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "MousePositionChange",
+                    "type": "Value",
+                    "id": "ac232739-6d6b-4868-8254-c79eb1b4f04d",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "MouseButton0",
+                    "type": "Button",
+                    "id": "589ccee4-1854-4a47-9b4f-8bb06591a14c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -44,6 +62,28 @@
                     "processors": "NormalizeVector2",
                     "groups": "Keyboard&Mouse",
                     "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8c53cfab-200d-4a38-869a-9fc38bcdeac5",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "MousePositionChange",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "79534e68-5496-4595-941d-8c143603f9af",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Hold(duration=0.01)",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "MouseButton0",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
