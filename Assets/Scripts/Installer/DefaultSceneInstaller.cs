@@ -7,20 +7,16 @@ namespace Assets.Scripts
 	[CreateAssetMenu(menuName = "ScriptableObject/DefaultSceneInstaller")]
 	public class DefaultSceneInstaller : ScriptableObjectInstaller<DefaultSceneInstaller>
 	{
-		[SerializeField] private GameObject mainCamera;
-		[SerializeField] private GameObject player;
-		[SerializeField] private GameObject playerInputHandler;
-		[SerializeField] private GameObject selector;
-		[SerializeField] private GameObject playerEntitiesMover;
+		[SerializeField] private GameObject playerCameraPrefab, playerManagerPrefab, playerInputHandlerPrefab, selectorPrefab, playerEntitiesMoverPrefab;
 
 
 		public override void InstallBindings()
 		{
-			Container.Bind<PlayerCamera>().FromComponentInNewPrefab(mainCamera).AsSingle().NonLazy();
-			Container.Bind<Character>().FromComponentInNewPrefab(player).AsSingle().NonLazy();
-			Container.Bind<PlayerInputHandler>().FromComponentInNewPrefab(playerInputHandler).AsSingle().NonLazy();
-			Container.Bind<Selector>().FromComponentInNewPrefab(selector).AsSingle().NonLazy();
-			Container.Bind<PlayerEntitiesMover>().FromComponentInNewPrefab(playerEntitiesMover).AsSingle().NonLazy();
+			Container.Bind<PlayerCamera>().FromComponentInNewPrefab(playerCameraPrefab).AsSingle().NonLazy();
+			Container.Bind<PlayerManager>().FromComponentInNewPrefab(playerManagerPrefab).AsSingle().NonLazy();
+			Container.Bind<PlayerInputBroadcast>().FromComponentInNewPrefab(playerInputHandlerPrefab).AsSingle().NonLazy();
+			Container.Bind<Selector>().FromComponentInNewPrefab(selectorPrefab).AsSingle().NonLazy();
+			Container.Bind<PlayerEntitiesMover>().FromComponentInNewPrefab(playerEntitiesMoverPrefab).AsSingle().NonLazy();
 
 
 			Container.BindFactory<GameObject, Transform, PrefabFactory>().FromFactory<CustomPrefabFactory>();
@@ -29,20 +25,20 @@ namespace Assets.Scripts
 
 	public class PrefabFactory : PlaceholderFactory<GameObject, Transform>
 	{
-		//public Transform Create(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent = null)
-		//{
-		//	var t = Create(prefab);
-		//	t.SetParent(parent, worldPositionStays: false);
-		//	t.position = position;
-		//	t.rotation = rotation;
-		//	return t;	
-		//}
-		//public Transform Create(GameObject prefab, Transform parent)
-		//{
-		//	var t = Create(prefab);
-		//	t.SetParent(parent, worldPositionStays: false);
-		//	return t;
-		//}
+		public Transform Create(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent = null)
+		{
+			var t = Create(prefab);
+			t.SetParent(parent, worldPositionStays: false);
+			t.position = position;
+			t.rotation = rotation;
+			return t;
+		}
+		public Transform Create(GameObject prefab, Transform parent)
+		{
+			var t = Create(prefab);
+			t.SetParent(parent, worldPositionStays: false);
+			return t;
+		}
 	}
 
 	public class CustomPrefabFactory : IFactory<GameObject, Transform>

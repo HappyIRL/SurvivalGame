@@ -4,17 +4,17 @@ using UnityEngine.InputSystem;
 
 namespace Assets.Scripts
 {
-	public class PlayerInputHandler : MonoBehaviour
+	public class PlayerInputBroadcast : MonoBehaviour
 	{
+		private SurvivalInputActions survivalInputAction;
+		private SurvivalInputActions.PlayerActions playerActions;
 
-		public event Action<Vector2> MousePosChange;
-		public event Action<int> Scroll;
 		public event Action<Vector2> MouseButton1;
 		public event Action<Vector2> MouseButton0Started;
 		public event Action<Vector2> MouseButton0Cancled;
+		public event Action<Vector2> MousePosChange;
+		public event Action<int> Scroll;
 
-		private SurvivalInputActions survivalInputAction;
-		private SurvivalInputActions.PlayerActions playerActions;
 
 		private Vector2 mousePos;
 

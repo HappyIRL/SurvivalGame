@@ -1,15 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Zenject;
 
 namespace Assets.Scripts
 {
-	public class PlayerCameraMove : MonoBehaviour
-	{
-		[Inject] private PlayerInputHandler playerInput;
-
+	public class PlayerCameraMove : PlayerInputEventsBehaviour
+	{ 
 		[SerializeField] private float maxZoomOut = 12;
 		[SerializeField] private float maxZoomIn = 4;
 
@@ -24,19 +20,11 @@ namespace Assets.Scripts
 		private Vector3 cameraPos;
 		private Vector2 mousePos;
 
-
-
 		private Camera camera;
 
 		private void Awake()
 		{
 			camera = GetComponent<Camera>();
-		}
-
-		private void OnEnable()
-		{
-			playerInput.Scroll += OnScroll;
-			playerInput.MousePosChange += OnMousePosChange;
 		}
 
 		private void Start()
@@ -46,11 +34,14 @@ namespace Assets.Scripts
 			moveScreenTriggerY = new Utils.Float2MinMax(moveScreenDistanceFromBoarder, Screen.height - moveScreenDistanceFromBoarder);
 		}
 
-		private void OnMousePosChange(Vector2 mousePos)
+		protected  override void OnMousePosChange(Vector2 mousePos)
 		{
 			this.mousePos = mousePos;
 		}
-
+		protected override void OnScroll(int scrollDelta)
+		{
+			camera.transform.position = new Vector3(transform.position.x, Mathf.Clamp(-scrollDelta + camera.transform.position.y, maxZoomIn, maxZoomOut), transform.position.z);
+		}
 		private void Update()
 		{
 			cameraPos = camera.transform.position;
@@ -65,18 +56,6 @@ namespace Assets.Scripts
 				cameraPos.z += panSpeed * Time.deltaTime;
 
 			camera.transform.position = cameraPos;
-		}
-
-		private void OnScroll(int scrollDelta)
-		{
-			camera.transform.position = new Vector3(transform.position.x, Mathf.Clamp(-scrollDelta + camera.transform.position.y, maxZoomIn, maxZoomOut), transform.position.z);
-		}
-
-		private void OnDisable()
-		{
-			playerInput.Scroll -= OnScroll;
-			playerInput.MousePosChange -= OnMousePosChange;
-
 		}
 	}
 }

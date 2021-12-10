@@ -1,22 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Scripts
 {
-	public class PlayerEntitiesMover : MonoBehaviour
+
+	//Make this an interface? Something like IPlayerMoveable
+	public class PlayerEntitiesMover : PlayerInputEventsBehaviour
 	{
-		[Inject] private PlayerCamera playerCamera;
-		[Inject] private PlayerInputHandler inputHandler;
-		[Inject] private Selector selector;
 
-		private void OnEnable()
-		{
-			inputHandler.MouseButton1 += OnMouseButton1;
-		}
 
-		private void OnMouseButton1(Vector2 mousePos)
+		[Zenject.Inject] private PlayerCamera playerCamera;
+		[Zenject.Inject] private Selector selector;
+
+		protected override void OnMouse1(Vector2 mousePos)
 		{
 			RaycastHit? hit = playerCamera.MouseToWorldRay(mousePos);
 			if (hit == null) return;
@@ -27,12 +24,5 @@ namespace Assets.Scripts
 				moveable.Move(hit.Value.point);
 			}
 		}
-
-		private void OnDisable()
-		{
-			inputHandler.MouseButton1 -= OnMouseButton1;
-		}
-
-
 	}
 }

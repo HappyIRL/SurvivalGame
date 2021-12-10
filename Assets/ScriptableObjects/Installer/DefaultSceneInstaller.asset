@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565c0ed6e764a6e43863dbfa77bab8d8, type: 3}
   m_Name: DefaultSceneInstaller
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 6130648598118089487, guid: 4fa2ba90211d934478eafada58e81b0c, type: 3}
-  player: {fileID: 8402138125726033021, guid: 17c1ea6fd71c8234e97e3592539f1a08, type: 3}
-  playerInputHandler: {fileID: 6106245284985868985, guid: 9d6b63efc0cb80649893e66c858d8e87, type: 3}
+  playerCameraPrefab: {fileID: 6130648598118089487, guid: 4fa2ba90211d934478eafada58e81b0c, type: 3}
+  playerManagerPrefab: {fileID: 4541322489301670968, guid: 515f9b062c272be499e10c13bd1ed4ca, type: 3}
+  playerInputHandlerPrefab: {fileID: 6106245284985868985, guid: 9d6b63efc0cb80649893e66c858d8e87, type: 3}
+  selectorPrefab: {fileID: 3945349683208520984, guid: e58ed0d329e3d6d4a96654675ff40f53, type: 3}
+  playerEntitiesMoverPrefab: {fileID: 2536592231644699786, guid: 32f50817cdfd89d4493a8d30434c95fc, type: 3}

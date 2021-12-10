@@ -5,16 +5,14 @@ using UnityEngine.AI;
 
 namespace Assets.Scripts
 {
-	public class EntityMovement : MonoBehaviour
+	public class EntityMovement : MonoBehaviour, IMoveable
 	{
 		private NavMeshAgent agent;
 
 		private float speed = 10f;
 		private float stoppingDistance = 0.1f;
 
-		private Vector3 destination;
-
-		private void Awake()
+		protected virtual void Awake()
 		{
 			if (TryGetComponent(out NavMeshAgent oldAgent))
 			{
@@ -31,18 +29,11 @@ namespace Assets.Scripts
 			agent.stoppingDistance = stoppingDistance;
 		}
 
-		protected void MoveToVector(Vector3 vector)
+		public virtual void Move(Vector3 destination)
 		{
-			destination = vector;
-			agent.transform.forward = vector - agent.transform.position;
+			agent.transform.forward = destination - agent.transform.position;
 			agent.velocity = agent.transform.forward * speed;
-			agent.SetDestination(vector);
-		}
-
-		private void OnDrawGizmos()
-		{
-			Gizmos.color = Color.green;
-			Gizmos.DrawCube(destination, new Vector3(0.1f, 0.1f, 0.1f));
+			agent.SetDestination(destination);
 		}
 	}
 }

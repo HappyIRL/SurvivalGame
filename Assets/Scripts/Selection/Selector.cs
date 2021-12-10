@@ -1,39 +1,26 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
-using Assets.Scripts;
-using UnityEditor;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Scripts
 {
-	public class Selector : MonoBehaviour
+	public class Selector : PlayerInputEventsBehaviour
 	{
-		[Inject] private PlayerCamera playerCamera;
-		[Inject] private PlayerInputHandler inputHandler;
+		[Zenject.Inject] private PlayerCamera playerCamera;
 
 		private List<Collider> selected = new List<Collider>();
 		public ReadOnlyCollection<Collider> Selected => selected.AsReadOnly();
 
 		private Vector3 startPos;
 
-
-		private void OnEnable()
-		{
-			inputHandler.MouseButton0Started += OnMouseButton0Started;
-			inputHandler.MouseButton0Cancled += OnMouseButton0Cancled;
-
-		}
-
-		private void OnMouseButton0Started(Vector2 mousePos)
+		protected override void OnMouse0Started(Vector2 mousePos)
 		{
 			RaycastHit? hit = playerCamera.MouseToWorldRay(mousePos);
 			if (hit == null) return;
 			startPos = hit.Value.point;
 		}
 
-		private void OnMouseButton0Cancled(Vector2 mousePos)
+		protected override void OnMouse0Cancled(Vector2 mousePos)
 		{
 			RaycastHit? hit = playerCamera.MouseToWorldRay(mousePos);
 			if (hit == null) return;
@@ -75,14 +62,6 @@ namespace Assets.Scripts
 			}
 
 			selected.Clear();
-
-
-		}
-
-		private void OnDisable()
-		{
-			inputHandler.MouseButton0Started -= OnMouseButton0Started;
-			inputHandler.MouseButton0Cancled -= OnMouseButton0Cancled;
 		}
 	}
 }
